@@ -1,0 +1,42 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+
+  // 保存时自动格式化
+  "editor.formatOnSave": true,
+
+  // 指定默认格式化程序为Prettier
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+
+  // 针对特定语言设置格式化程序
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // Tailwind CSS 类名排序
+  "editor.quickSuggestions": {
+    "strings": true
+  },
+
+  // ESLint配置
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  }
+}
