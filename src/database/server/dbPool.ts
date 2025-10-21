@@ -5,5 +5,9 @@ import ws from 'ws';
 
 neonConfig.webSocketConstructor = ws;
 
+import * as schema from '../schemas';
+
+export type AdiaDatabaseSchema = typeof schema;
+
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-export const dbPool = drizzle({ client: pool });
+export const dbPool = drizzle({ client: pool, schema });

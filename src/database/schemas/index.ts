@@ -10,18 +10,21 @@ import {
   primaryKey,
   boolean,
   foreignKey,
+  jsonb,
 } from 'drizzle-orm/pg-core';
 import { InferInsertModel, InferSelectModel } from 'drizzle-orm';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
-import { z } from 'zod';
-import { table } from 'console';
+import type { AdapterAccountType } from 'next-auth/adapters';
+import { AppUsage } from '@/lib/usage';
 
 // user table
-export const usersTable = pgTable('user', {
+export const usersTable = pgTable('users', {
   id: uuid('id').primaryKey().notNull().defaultRandom(),
   name: varchar('name', { length: 255 }).notNull(),
   email: varchar('email', { length: 255 }).notNull().unique(),
   password: varchar('password', { length: 255 }).notNull(),
+  emailVerified: timestamp('emailVerified', { mode: 'date' }),
+  image: text('image'),
   createdAt: timestamp('createdAt').notNull().defaultNow(),
   updatedAt: timestamp('updatedAt').notNull().defaultNow(),
 });
@@ -33,6 +36,30 @@ export type UserItem = InferSelectModel<typeof usersTable>;
 // zod schema for insert
 export const userInsertSchema = createInsertSchema(usersTable);
 
+export const accountsTable = pgTable(
+  'accounts',
+  {
+    userId: uuid('userId')
+      .notNull()
+      .references(() => usersTable.id, { onDelete: 'cascade' }),
+    type: text('type').$type<AdapterAccountType>().notNull(),
+    provider: text('provider').notNull(),
+    providerAccountId: text('providerAccountId').notNull(),
+    refresh_token: text('refresh_token'),
+    access_token: text('access_token'),
+    expires_at: integer('expires_at'),
+    token_type: text('token_type'),
+    scope: text('scope'),
+    id_token: text('id_token'),
+    session_state: text('session_state'),
+  },
+  table => [
+    primaryKey({
+      columns: [table.provider, table.providerAccountId],
+    }),
+  ]
+);
+
 // chat table
 export const chatTable = pgTable('chat', {
   id: uuid('id').primaryKey().notNull().defaultRandom(),
@@ -41,6 +68,10 @@ export const chatTable = pgTable('chat', {
     .references(() => usersTable.id),
   title: text('title').notNull(),
   createdAt: timestamp('createdAt').notNull().defaultNow(),
+  visibility: varchar('visibility', { enum: ['public', 'private'] })
+    .notNull()
+    .default('private'),
+  lastContext: jsonb('lastContext').$type<AppUsage | null>(),
 });
 
 // type for insert
