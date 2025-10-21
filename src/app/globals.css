@@ -1,5 +1,8 @@
 @import 'tailwindcss';
 
+/* include utility classes in streamdown */
+@source '../node_modules/streamdown/dist/index.js';
+
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:is(.dark *));
@@ -123,4 +126,151 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+@utility -webkit-overflow-scrolling-touch {
+  -webkit-overflow-scrolling: touch;
+}
+
+@utility touch-pan-y {
+  touch-action: pan-y;
+}
+
+@utility overscroll-behavior-contain {
+  overscroll-behavior: contain;
+}
+
+@layer utilities {
+  :root {
+    --foreground-rgb: 0, 0, 0;
+    --background-start-rgb: 214, 219, 220;
+    --background-end-rgb: 255, 255, 255;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --foreground-rgb: 255, 255, 255;
+      --background-start-rgb: 0, 0, 0;
+      --background-end-rgb: 0, 0, 0;
+    }
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    overflow-x: hidden;
+    position: relative;
+  }
+
+  html {
+    overflow-x: hidden;
+  }
+}
+
+.skeleton {
+  * {
+    pointer-events: none !important;
+  }
+
+  *[class^='text-'] {
+    color: transparent;
+    @apply bg-foreground/20 animate-pulse rounded-md select-none;
+  }
+
+  .skeleton-bg {
+    @apply bg-foreground/10;
+  }
+
+  .skeleton-div {
+    @apply bg-foreground/20 animate-pulse;
+  }
+}
+
+.ProseMirror {
+  outline: none;
+}
+
+.cm-editor,
+.cm-gutters {
+  @apply bg-background! outline-hidden! selection:bg-zinc-900! dark:bg-zinc-800!;
+}
+
+.ͼo.cm-focused > .cm-scroller > .cm-selectionLayer .cm-selectionBackground,
+.ͼo.cm-selectionBackground,
+.ͼo.cm-content::selection {
+  @apply bg-zinc-200! dark:bg-zinc-900!;
+}
+
+.cm-activeLine,
+.cm-activeLineGutter {
+  @apply bg-transparent!;
+}
+
+.cm-activeLine {
+  @apply rounded-r-sm!;
+}
+
+.cm-lineNumbers {
+  @apply min-w-7;
+}
+
+.cm-foldGutter {
+  @apply min-w-3;
+}
+
+.cm-lineNumbers .cm-activeLineGutter {
+  @apply rounded-l-sm!;
+}
+
+.suggestion-highlight {
+  @apply bg-blue-200 hover:bg-blue-300 dark:bg-blue-500/40 dark:text-blue-50 dark:hover:bg-blue-400/50;
+}
+
+/* minimal scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+  transition: background 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: --alpha(var(--muted-foreground) / 0.5);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* firefox scrollbar styling */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
 }

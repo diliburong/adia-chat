@@ -1,13 +1,10 @@
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
-import {
-  ClerkProvider,
-  SignInButton,
-  SignUpButton,
-  SignedIn,
-  SignedOut,
-  UserButton,
-} from '@clerk/nextjs';
+import { SessionProvider } from 'next-auth/react';
+import { Toaster } from 'sonner';
+
+import { TooltipProvider } from '@/components/ui/tooltip';
+
 import './globals.css';
 
 const geistSans = Geist({
@@ -29,24 +26,17 @@ export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-  test: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-          <header className="flex h-16 items-center justify-end gap-4 p-4">
-            <SignedOut>
-              <SignInButton />
-              <SignUpButton />
-            </SignedOut>
-            <SignedIn>
-              <UserButton />
-            </SignedIn>
-          </header>
-          {children}
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en">
+      <SessionProvider>
+        <TooltipProvider>
+          <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+            {children}
+          </body>
+          <Toaster position="top-center" />
+        </TooltipProvider>
+      </SessionProvider>
+    </html>
   );
 }
