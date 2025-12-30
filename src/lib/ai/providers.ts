@@ -4,8 +4,11 @@ import { customProvider, extractReasoningMiddleware, wrapLanguageModel } from 'a
 // export const myProviders = customProvider({
 
 // });
-export const myProvides = customProvider({
-  languageModels: {
-    'deepseek-chat': deepseek('deepseek-chat'),
-  },
-});
+
+// MIGRATED: Commented out due to LanguageModelV2 vs LanguageModelV3 type incompatibility
+// This export was not being used anywhere in the codebase
+// export const myProvides = customProvider({
+//   languageModels: {
+//     'deepseek-chat': deepseek('deepseek-chat'),
+//   },
+// });

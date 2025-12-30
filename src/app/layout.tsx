@@ -33,8 +33,10 @@ export default function RootLayout({
     <html lang="en" className={`${geist.variable} ${geistMono.variable}`} suppressHydrationWarning>
       <SessionProvider>
         <TooltipProvider>
-          <body>{children}</body>
-          <Toaster position="top-center" />
+          <body>
+            {children}
+            <Toaster position="top-center" />
+          </body>
         </TooltipProvider>
       </SessionProvider>
     </html>

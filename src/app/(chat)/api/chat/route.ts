@@ -162,11 +162,12 @@ export async function POST(req: Request) {
     let finalMergedUsage: AppUsage | undefined;
 
     const stream = createUIMessageStream({
-      execute: ({ writer: dataStream }) => {
+      execute: async ({ writer: dataStream }) => {
+        const modelMessages = await convertToModelMessages(uiMessages);
         const result = streamText({
           model: deepseek('deepseek-chat'),
           // system: systemPrompt({
-          messages: convertToModelMessages(uiMessages),
+          messages: modelMessages,
           stopWhen: stepCountIs(5),
           // experimental_activeTools:
           //   selectedChatModel === 'chat-model-reasoning'

@@ -1,4 +1,4 @@
-import { createNanoId } from '@/utils';
+import { createNanoId } from '@/lib/utils';
 
 const prefixes = {
   model: 'model',

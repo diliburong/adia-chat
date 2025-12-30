@@ -1,5 +1,5 @@
-// import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
-
+import { type NextRequest, NextResponse } from 'next/server';
+import { getToken } from 'next-auth/jwt';
 // export const config = {
 //   matcher: [
 //     // Skip Next.js internals and all static files, unless found in search params
@@ -16,12 +16,18 @@
 //   // '/history', // 历史记录
 //   // '/settings', // 设置页面
 // ]);
+export async function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl;
 
-// export default clerkMiddleware(async (auth, req) => {
-//   console.log('middleware');
-//   if (isProtectedRoute(req)) {
-//     await auth.protect();
-//   }
-// });
+  /*
+   * Playwright starts the dev server and requires a 200 status to
+   * begin the tests, so this ensures that the tests can start
+   */
+  if (pathname.startsWith('/ping')) {
+    return new Response('pong', { status: 200 });
+  }
 
-export { auth as middleware } from '@/app/(auth)/auth';
+  return NextResponse.next();
+}
+
+// export { auth as middleware } from '@/app/(auth)/auth';
