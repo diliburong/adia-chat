@@ -1,10 +1,11 @@
 {
   "typescript.tsdk": "node_modules/typescript/lib",
 
-  // 保存时自动格式化
+  "eslint.enable": true,
+  // // 保存时自动格式化
   "editor.formatOnSave": true,
 
-  // 指定默认格式化程序为Prettier
+  // // 指定默认格式化程序为Prettier
   "editor.defaultFormatter": "esbenp.prettier-vscode",
 
   // 针对特定语言设置格式化程序
@@ -34,9 +35,8 @@
   "editor.quickSuggestions": {
     "strings": true
   },
-
   // ESLint配置
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit"
-  }
+  // "editor.codeActionsOnSave": {
+  //   "source.fixAll.eslint": "explicit"
+  // }
 }
