@@ -9,6 +9,8 @@ import { SparklesIcon } from 'lucide-react';
 import { memo, useState } from 'react';
 import { MessageContent } from './elements/message';
 import { Response } from './elements/response';
+import { useDataStream } from './data-stream-provider';
+import { MessageActions } from './message-actions';
 
 export type PreviewMessageProps = {
   chatId: string;
@@ -32,6 +34,10 @@ const PureMessage = ({
 }: PreviewMessageProps) => {
   const [mode, setMode] = useState<'view' | 'edit'>('view');
 
+  const attachmentsFromMessage = message.parts.filter(part => part.type === 'file');
+
+  useDataStream();
+
   return (
     <motion.div
       animate={{ opacity: 1 }}
@@ -46,6 +52,12 @@ const PureMessage = ({
           'justify-start': message.role === 'assistant',
         })}
       >
+        {message.role === 'assistant' && (
+          <div className="bg-background ring-border -mt-1 flex size-8 shrink-0 items-center justify-center rounded-full ring-1">
+            <SparklesIcon size={14} />
+          </div>
+        )}
+
         <div
           className={cn('flex flex-col', {
             'gap-2 md:gap-4': message.parts?.some(p => p.type === 'text' && p.text?.trim()),
@@ -87,6 +99,15 @@ const PureMessage = ({
             }
             return null;
           })}
+
+          {!isReadonly && (
+            <MessageActions
+              chatId={chatId}
+              message={message}
+              isLoading={isLoading}
+              setMode={setMode}
+            />
+          )}
         </div>
       </div>
     </motion.div>

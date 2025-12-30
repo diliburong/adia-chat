@@ -7,6 +7,7 @@ import { Conversation, ConversationContent } from './conversation';
 import { Greeting } from './greeting';
 import { ArrowDownIcon } from 'lucide-react';
 import { PreviewMessage, ThinkingMessage } from './message';
+import { useDataStream } from './data-stream-provider';
 
 type MessagesProps = {
   chatId: string;
@@ -39,6 +40,8 @@ const PureMessages = ({
     status,
   });
 
+  useDataStream();
+
   useEffect(() => {
     if (status === 'submitted') {
       requestAnimationFrame(() => {
@@ -59,8 +62,8 @@ const PureMessages = ({
       ref={messagesContainerRef}
       className="overscroll-behavior-contain -webkit-overflow-scrolling-touch flex-1 touch-pan-y overflow-y-scroll"
     >
-      <Conversation>
-        <ConversationContent>
+      <Conversation className="mx-auto flex max-w-4xl min-w-0 flex-col gap-4 md:gap-6">
+        <ConversationContent className="flex flex-col gap-4 px-2 py-4 md:gap-6 md:px-4">
           {messages.length === 0 && <Greeting />}
 
           {messages.map((message, index) => (

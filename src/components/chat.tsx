@@ -122,20 +122,18 @@ export const Chat = ({
     <>
       <div className="bg-background flex h-dvh min-w-0 flex-col">
         <ChatHeader />
-        <div className="relative flex min-w-0 flex-1 flex-col gap-6 px-2 pt-4">
-          <Messages
-            chatId={id}
-            // isArtifactVisible={isArtifactVisible}
-            isReadonly={isReadonly}
-            messages={messages}
-            regenerate={regenerate}
-            selectedModelId={initialChatModel}
-            setMessages={setMessages}
-            status={status}
-            isArtifactVisible={false}
-            // votes={votes}
-          />
-        </div>
+        <Messages
+          chatId={id}
+          // isArtifactVisible={isArtifactVisible}
+          isReadonly={isReadonly}
+          messages={messages}
+          regenerate={regenerate}
+          selectedModelId={initialChatModel}
+          setMessages={setMessages}
+          status={status}
+          isArtifactVisible={false}
+          // votes={votes}
+        />
         <div className="bg-background sticky bottom-0 z-1 mx-auto flex w-full max-w-4xl gap-2 border-t-0 px-2 pb-3 md:px-4 md:pb-4">
           {!isReadonly && (
             <MultimodalInput
