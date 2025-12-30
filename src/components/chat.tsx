@@ -106,6 +106,7 @@ export const Chat = ({
         parts: [{ type: 'text', text: query }],
       });
 
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setHasAppendedQuery(true);
       window.history.replaceState({}, '', `/chat/${id}`);
     }

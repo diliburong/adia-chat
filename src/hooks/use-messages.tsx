@@ -10,6 +10,7 @@ export const useMessages = ({ status }: { status: UseChatHelpers<ChatMessage>['s
 
   useEffect(() => {
     if (status === 'submitted') {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setHasSentMessage(true);
     }
   }, [status]);
